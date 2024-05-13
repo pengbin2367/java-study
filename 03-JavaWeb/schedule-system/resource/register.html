@@ -96,7 +96,7 @@
         function checkUsername() {
             let usernameInput = document.getElementById('username');
             let usernameRegTip = document.getElementById('usernameRegTip');
-            let usernameReg = /^[a-zA-Z0-9](5,10)$/;
+            let usernameReg = /^[a-zA-Z0-9]{5,10}$/;
             if (!usernameReg.test(usernameInput.value)) {
                 usernameInput.value = '';
                 usernameRegTip.style.display = 'inline-block';
@@ -158,8 +158,8 @@
             </label>
             <span class="tip" id="repeatPasswordRegTip">密码不一致</span>
             <div id="btns">
-                <button class="btn" id="login">注册</button>
-                <button class="btn" id="reset">重置</button>
+                <button class="btn" id="login" type="submit">注册</button>
+                <button class="btn" id="reset" type="reset">重置</button>
                 <button class="btn" id="register"><a href="/user/login">去登录</a></button>
             </div>
         </form>
