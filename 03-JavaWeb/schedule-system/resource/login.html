@@ -11,17 +11,85 @@
         #container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-content: center;
             text-align: center;
             width: 100vw;
             height: 100vh;
+            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+            font-family: "JetBrainsMono Nerd Font Mono", Times, serif !important;
+            font-weight: lighter;
+        }
+        #title {
+            margin-top: 200px;
+            font-size: 48px;
+        }
+        #tip {
+            margin-top: 20px;
+            font-size: 36px;
+            letter-spacing: 5px;
+        }
+        #content {
+            margin: 30px auto;
+            width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 15px;
+        }
+        #usr, #pwd {
+            display: inline-block;
+            width: 150px;
+            font-size: 20px;
+        }
+        #usr {
+            letter-spacing: 1px;
+        }
+        #pwd {
+            margin-top: 15px;
+            letter-spacing: 4px;
+        }
+        input {
+            width: 200px;
+            height: 28px;
+            border: none;
+            border-radius: 3px;
+        }
+        input:focus {
+            outline: none;
         }
         #btns {
-            margin-top: 20px;
+            margin: 20px auto;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
         }
         .btn {
+            display: block;
             margin: 0 10px;
+            height: 36px;
+            width: 70px;
+            letter-spacing: 2px;
+            font-size: 20px;
+            border-radius: 5px;
+            background-color: #7cdbef;
+            border: none;
+            box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.3);
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .btn:focus {
+            outline: none;
+        }
+        .tip {
+            display: none;
+            color: red;
+            margin-left: 20px;
         }
     </style>
     <script>
@@ -61,8 +129,16 @@
         <h1 id="title">欢迎使用日程管理系统</h1>
         <h3 id="tip">请登录</h3>
         <form id="content" method="post" action="/user/login" onsubmit="return checkForm()">
-            <label>请输入用户名：<input type="text" name="username" id="username"></label><span id="usernameRegTip" style="display: none; color: red;margin-left: 20px">用户名格式有误</span><br>
-            <label>请输入密码：<input type="password" name="password" id="password"></label><span id="passwordRegTip" style="display: none; color: red;margin-left: 20px">密码格式有误</span>
+            <label>
+                <span id="usr">请输入用户名：</span>
+                <input type="text" name="username" id="username">
+            </label>
+            <span class="tip" id="usernameRegTip">用户名格式有误</span>
+            <label>
+                <span id="pwd">请输入密码：</span>
+                <input type="password" name="password" id="password">
+            </label>
+            <span class="tip" id="passwordRegTip">密码格式有误</span>
             <div id="btns">
                 <button class="btn" id="login">登录</button>
                 <button class="btn" id="reset">重置</button>
