@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        #btns {
+            margin-top: 20px;
+        }
+        .btn {
+            margin: 0 10px;
+        }
+    </style>
+    <script>
+        function checkUsername() {
+            let usernameInput = document.getElementById('username');
+            let usernameRegTip = document.getElementById('usernameRegTip');
+            let usernameReg = /^[a-zA-Z0-9](5,10)$/;
+            if (!usernameReg.test(usernameInput.value)) {
+                usernameInput.value = '';
+                usernameRegTip.style.display = 'inline-block';
+                return false;
+            }
+            usernameRegTip.style.display = 'none';
+            return true;
+        }
+        function checkPassword() {
+            let passwordInput = document.getElementById('password');
+            let passwordRegTip = document.getElementById('passwordRegTip');
+            let passwordReg = /^[0-9]{6}$/;
+            if (!passwordReg.test(passwordInput.value)) {
+                passwordInput.value = '';
+                passwordRegTip.style.display = 'inline-block';
+                return false;
+            }
+            passwordRegTip.style.display = 'none';
+            return true;
+        }
+        function checkForm() {
+            let usernameCheck = checkUsername();
+            let passwordCheck = checkPassword();
+            return usernameCheck && passwordCheck;
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <h1 id="title">欢迎使用日程管理系统</h1>
+        <h3 id="tip">请登录</h3>
+        <form id="content" method="post" action="/user/login" onsubmit="return checkForm()">
+            <label>请输入用户名：<input type="text" name="username" id="username"></label><span id="usernameRegTip" style="display: none; color: red;margin-left: 20px">用户名格式有误</span><br>
+            <label>请输入密码：<input type="password" name="password" id="password"></label><span id="passwordRegTip" style="display: none; color: red;margin-left: 20px">密码格式有误</span>
+            <div id="btns">
+                <button class="btn" id="login">登录</button>
+                <button class="btn" id="reset">重置</button>
+                <button class="btn" id="register"><a href="/user/register">去注册</a></button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
