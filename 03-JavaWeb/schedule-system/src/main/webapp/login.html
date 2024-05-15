@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Login</title>
     <style>
         * {
             margin: 0;
@@ -38,7 +38,7 @@
         label {
             margin-bottom: 15px;
         }
-        #usr, #pwd, #rpwd {
+        #usr, #pwd {
             display: inline-block;
             width: 150px;
             font-size: 20px;
@@ -46,7 +46,7 @@
         #usr {
             letter-spacing: 1px;
         }
-        #pwd, #rpwd {
+        #pwd {
             margin-top: 15px;
             letter-spacing: 4px;
         }
@@ -117,30 +117,17 @@
             passwordRegTip.style.display = 'none';
             return true;
         }
-        function checkRepeatPassword() {
-            let repeatPasswordInput = document.getElementById('repeatPassword');
-            let repeatPasswordRegTip = document.getElementById('repeatPasswordRegTip');
-            let passwordInput = document.getElementById('password');
-            if (repeatPasswordInput.value !== passwordInput.value) {
-                repeatPasswordInput.value = '';
-                repeatPasswordRegTip.style.display = 'inline-block';
-                return false;
-            }
-            repeatPasswordRegTip.style.display = 'none';
-            return true;
-        }
         function checkForm() {
             let usernameCheck = checkUsername();
             let passwordCheck = checkPassword();
-            let repeatPasswordCheck = checkRepeatPassword();
-            return usernameCheck && passwordCheck && repeatPasswordCheck;
+            return usernameCheck && passwordCheck;
         }
     </script>
 </head>
 <body>
     <div id="container">
         <h1 id="title">欢迎使用日程管理系统</h1>
-        <h3 id="tip">请注册</h3>
+        <h3 id="tip">请登录</h3>
         <form id="content" method="post" action="/user/login" onsubmit="return checkForm()">
             <label>
                 <span id="usr">请输入用户名：</span>
@@ -152,15 +139,10 @@
                 <input type="password" name="password" id="password">
             </label>
             <span class="tip" id="passwordRegTip">密码格式有误</span>
-            <label>
-                <span id="rpwd">请确认密码：</span>
-                <input type="password" name="repeatPassword" id="repeatPassword">
-            </label>
-            <span class="tip" id="repeatPasswordRegTip">密码不一致</span>
             <div id="btns">
-                <button class="btn" id="login" type="submit">注册</button>
+                <button class="btn" id="login" type="submit">登录</button>
                 <button class="btn" id="reset" type="reset">重置</button>
-                <button class="btn" id="register"><a href="/user/login">去登录</a></button>
+                <button class="btn" id="register"><a href="/register.html">去注册</a></button>
             </div>
         </form>
     </div>
