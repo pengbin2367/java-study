@@ -28,6 +28,7 @@ public class SysUserController extends BaseController {
             resp.sendRedirect("/loginPasswordError.html");
         } else {
             // login success
+            req.getSession().setAttribute("sysUser", sysUser);
             resp.sendRedirect("/showSchedule.html");
         }
     }
