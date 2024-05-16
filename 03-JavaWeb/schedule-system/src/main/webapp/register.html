@@ -87,7 +87,6 @@
             outline: none;
         }
         .tip {
-            display: none;
             color: red;
             margin-left: 20px;
         }
@@ -99,10 +98,27 @@
             let usernameReg = /^[a-zA-Z0-9]{5,10}$/;
             if (!usernameReg.test(usernameInput.value)) {
                 usernameInput.value = '';
-                usernameRegTip.style.display = 'inline-block';
+                usernameRegTip.innerText = '用户名格式有误';
                 return false;
             }
-            usernameRegTip.style.display = 'none';
+
+            let request = new XMLHttpRequest();
+            request.open("GET", `/user/checkUsernameUsed?username=${usernameInput.value}`);
+            request.send();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status >= 200 && request.status < 300) {
+                        let result = JSON.parse(request.responseText);
+                        console.log(result);
+                        if (result.code !== 200) {
+                            usernameRegTip.innerText = result.message;
+                            // TODO check fail, but form will submit, use Axios and Promise to fix
+                        }
+                    }
+                }
+            }
+
+            usernameRegTip.innerText = "OK";
             return true;
         }
         function checkPassword() {
@@ -111,10 +127,10 @@
             let passwordReg = /^[0-9]{6}$/;
             if (!passwordReg.test(passwordInput.value)) {
                 passwordInput.value = '';
-                passwordRegTip.style.display = 'inline-block';
+                passwordRegTip.innerText = '密码格式有误';
                 return false;
             }
-            passwordRegTip.style.display = 'none';
+            passwordRegTip.innerText = 'OK';
             return true;
         }
         function checkRepeatPassword() {
@@ -123,10 +139,10 @@
             let passwordInput = document.getElementById('password');
             if (repeatPasswordInput.value !== passwordInput.value) {
                 repeatPasswordInput.value = '';
-                repeatPasswordRegTip.style.display = 'inline-block';
+                repeatPasswordRegTip.innerText = '密码不一致';
                 return false;
             }
-            repeatPasswordRegTip.style.display = 'none';
+            repeatPasswordRegTip.innerText = '';
             return true;
         }
         function checkForm() {
@@ -144,19 +160,19 @@
         <form id="content" method="post" action="/user/register" onsubmit="return checkForm()">
             <label>
                 <span id="usr">请输入用户名：</span>
-                <input type="text" name="username" id="username">
+                <input type="text" name="username" id="username" onblur="checkUsername()">
             </label>
-            <span class="tip" id="usernameRegTip">用户名格式有误</span>
+            <span class="tip" id="usernameRegTip"></span>
             <label>
                 <span id="pwd">请输入密码：</span>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" onblur="checkPassword()">
             </label>
-            <span class="tip" id="passwordRegTip">密码格式有误</span>
+            <span class="tip" id="passwordRegTip"></span>
             <label>
                 <span id="rpwd">请确认密码：</span>
-                <input type="password" name="repeatPassword" id="repeatPassword">
+                <input type="password" name="repeatPassword" id="repeatPassword" onblur="checkRepeatPassword()">
             </label>
-            <span class="tip" id="repeatPasswordRegTip">密码不一致</span>
+            <span class="tip" id="repeatPasswordRegTip"></span>
             <div id="btns">
                 <button class="btn" id="login" type="submit">注册</button>
                 <button class="btn" id="reset" type="reset">重置</button>

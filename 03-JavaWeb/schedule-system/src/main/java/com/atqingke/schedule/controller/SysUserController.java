@@ -1,9 +1,12 @@
 package com.atqingke.schedule.controller;
 
+import com.atqingke.schedule.common.Result;
+import com.atqingke.schedule.common.ResultCodeEnum;
 import com.atqingke.schedule.pojo.SysUser;
 import com.atqingke.schedule.service.SysUserService;
 import com.atqingke.schedule.service.impl.SysUserServiceImpl;
 import com.atqingke.schedule.util.MD5Util;
+import com.atqingke.schedule.util.WebUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,5 +48,15 @@ public class SysUserController extends BaseController {
         } else {
             resp.sendRedirect("/registerFail.html");
         }
+    }
+
+    protected void checkUsernameUsed(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        SysUser sysUser = sysUserService.findByUsername(username);
+        Result result = Result.ok(null);
+        if (sysUser != null) {
+            result = Result.build(null, ResultCodeEnum.USERNAME_USED);
+        }
+        WebUtil.writeJson(resp, result);
     }
 }
