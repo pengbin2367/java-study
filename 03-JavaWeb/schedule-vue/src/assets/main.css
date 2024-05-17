@@ -1,0 +1,21 @@
+#app {
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+  font-family: "JetBrainsMono Nerd Font Mono", Times, serif !important;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 8px
+}
