@@ -37,3 +37,9 @@ INSERT INTO `sys_user` VALUES (1, 'zhangsan', 'e10adc3949ba59abbe56e057f20f883e'
 INSERT INTO `sys_user` VALUES (2, 'lisi', 'e10adc3949ba59abbe56e057f20f883e');
 
 select * from sys_user;
+
+insert into sys_schedule(sid, uid, title, completed) values (default, 14, '1111111111', 1);
+insert into sys_schedule(sid, uid, title, completed) values (default, 14, '2222222222', 1);
+insert into sys_schedule(sid, uid, title, completed) values (default, 14, '3333333333', 1);
+
+select * from sys_schedule;

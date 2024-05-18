@@ -1,5 +1,43 @@
 <script setup lang="ts">
 
+import {ref, reactive, onMounted} from 'vue'
+import {useUserStore} from "@/stores/user";
+import { http } from '@/utils/request';
+
+const userStore = useUserStore()
+
+let scheduleList = reactive([{
+  sid: 1,
+  title: '1111111111111111111111111111111',
+  completed: 0,
+  isActive: false
+},{
+  sid: 2,
+  title: '2222222222',
+  completed: 1,
+  isActive: false
+}])
+
+let {uid} = userStore.sysUser
+
+onMounted(async () => {
+  await showSchedule()
+})
+
+async function handlerDelete(index: number) {
+
+}
+async function handlerUpdate(index: number) {
+  console.log(scheduleList[index])
+}
+async function handlerSave() {
+
+}
+async function showSchedule() {
+  let {data} = await http.get(`schedule/getAllByUid?uid=${uid}`)
+  console.log(data)
+}
+
 </script>
 
 <template>
@@ -12,23 +50,24 @@
         <th>进度</th>
         <th>操作</th>
       </tr>
-      <tr class="ltr">
-        <td></td>
+      <tr v-for="(schedule,index) in scheduleList" :key="index" class="ltr">
+        <td v-text="index+1"></td>
+        <td><input id="title" type="text" v-model="schedule.title"
+                   :class="{active: schedule.isActive}"
+                   @click="schedule.isActive = true"
+                   @blur="schedule.isActive = false" ></td>
         <td >
-          <input type="text">
-        </td>
-        <td >
-          <input type="radio"  value="1"> 已完成
-          <input type="radio"  value="0"> 未完成
+          <input class="btnRadio" type="radio" value="1" v-model="schedule.completed"> 已完成
+          <input class="btnRadio" type="radio" value="0" v-model="schedule.completed"> 未完成
         </td>
         <td class="buttonContainer">
-          <button class="btn">删除</button>
-          <button class="btn">保存修改</button>
+          <button class="btn" @click="handlerDelete(index)">删除</button>
+          <button class="btn" @click="handlerUpdate(index)">保存修改</button>
         </td>
       </tr>
       <tr class="ltr buttonContainer" >
         <td colspan="4">
-          <button class="btn">新增日程</button>
+          <button class="btn" @click="handlerSave">新增日程</button>
         </td>
       </tr>
     </table>
@@ -39,6 +78,7 @@
 input {
   border: none;
   border-radius: 3px;
+  width: 80%;
 }
 input:focus {
   outline: none;
@@ -72,11 +112,19 @@ input:focus {
   margin: 0 auto;
   border-radius: 5px;
 }
+.btnRadio {
+  width: 20px;
+}
 .ltr td{
   border: 1px solid  powderblue;
 }
 .buttonContainer{
   margin: 0 auto;
 }
-
+#title {
+  background: transparent;
+}
+.active {
+  background: whitesmoke !important;
+}
 </style>
