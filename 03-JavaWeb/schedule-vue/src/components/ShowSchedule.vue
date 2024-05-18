@@ -1,22 +1,18 @@
 <script setup lang="ts">
 
-import {ref, reactive, onMounted} from 'vue'
+import { reactive, onMounted} from 'vue'
 import {useUserStore} from "@/stores/user";
 import { http } from '@/utils/request';
 
 const userStore = useUserStore()
 
-let scheduleList = reactive([{
-  sid: 1,
-  title: '1111111111111111111111111111111',
-  completed: 0,
-  isActive: false
-},{
-  sid: 2,
-  title: '2222222222',
-  completed: 1,
-  isActive: false
-}])
+interface ScheduleItem {
+  sid: number;
+  title: string;
+  completed: number; // 假设completed是一个数字，表示完成状态（如0表示未完成，1表示已完成）
+  isActive: boolean;
+}
+let scheduleList = reactive<ScheduleItem[]>([])
 
 let {uid} = userStore.sysUser
 
@@ -25,17 +21,48 @@ onMounted(async () => {
 })
 
 async function handlerDelete(index: number) {
-
+  let {sid} = scheduleList[index]
+  let result = await http.post(`schedule/delete?sid=${sid}`)
+  if (result.code === 200) {
+    window.location.reload()
+  }
 }
 async function handlerUpdate(index: number) {
-  console.log(scheduleList[index])
+  let sysSchedule = revertTask(scheduleList[index])
+  let result = await http.post('schedule/update', sysSchedule)
+  if (result.code === 200) {
+    window.location.reload()
+  }
 }
 async function handlerSave() {
-
+  let result = await http.post(`schedule/saveDefault?uid=${uid}`)
+  if (result.code === 200) {
+    window.location.reload()
+  }
 }
 async function showSchedule() {
   let {data} = await http.get(`schedule/getAllByUid?uid=${uid}`)
-  console.log(data)
+  let responseData = data.data
+  responseData.forEach((task: { sid: number, title: string, completed: number }) => {
+    let convertedTask = convertTask(task);
+    // 将转换后的任务添加到scheduleList中
+    scheduleList.push(convertedTask);
+  });
+}
+function convertTask(task: { sid: number, title: string, completed: number }): ScheduleItem {
+  return {
+    sid: task.sid,
+    title: task.title,
+    completed: task.completed,
+    isActive: false // 默认设置为false
+  };
+}
+function revertTask(task: ScheduleItem): any {
+  return {
+    sid: task.sid,
+    title: task.title,
+    completed: task.completed,
+  };
 }
 
 </script>
