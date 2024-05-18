@@ -1,17 +1,32 @@
 <script setup lang="ts">
+  import {useUserStore} from "@/stores/user";
+  import router from "@/router";
+  const userStore = useUserStore()
 
+  let sysUser = userStore.sysUser
+
+  function logout() {
+    router.push('/login');
+
+    // 等待一段时间后重置用户数据
+    setTimeout(() => {
+      // 重置用户数据
+      userStore.sysUser = {
+        uid: 0,
+        username: ''
+      };
+      window.location.reload()
+    }, 100);
+  }
 </script>
 
 <template>
   <div id="container">
     <h1 id="title">欢迎使用日程管理系统</h1>
     <div id="tip">
-      <span>欢迎xxx</span>
+      <span v-show="sysUser.username">欢迎{{ sysUser.username }}</span>
       <div id="btns">
-        <button class="btn">退出登录</button>
-        <RouterLink to="/showSchedule" class="btn">查看我的日程</RouterLink>
-        <RouterLink to="/login" class="btn" id="login" type="submit">登录</RouterLink>
-        <RouterLink to="/register" class="btn" id="register">去注册</RouterLink>
+        <button v-show="sysUser.username" class="btn" type="button" @click="logout">退出登录</button>
       </div>
     </div>
   </div>

@@ -27,7 +27,7 @@ async function checkUsername() {
     return false
   }
 
-  usernameMsg.value = 'OK';
+  usernameMsg.value = '';
   return true;
 }
 function checkPassword() {
@@ -36,7 +36,7 @@ function checkPassword() {
     passwordMsg.value = '密码格式不正确';
     return false;
   }
-  passwordMsg.value = 'OK';
+  passwordMsg.value = '';
   return true;
 }
 function checkRepeatPassword() {
@@ -44,7 +44,7 @@ function checkRepeatPassword() {
     repPasswordMsg.value = '两次密码不必配';
     return false;
   }
-  repPasswordMsg.value = 'OK';
+  repPasswordMsg.value = '';
   return true;
 }
 async function handleRegister() {
@@ -67,89 +67,104 @@ function clearForm() {
 </script>
 
 <template>
-  <form id="content">
-    <label>
-      <span id="usr">请输入用户名：</span>
-      <input type="text" name="username" id="username" v-model="regisUser.username" @blur="checkUsername">
-    </label>
-    <span class="tip" id="usernameRegTip">{{usernameMsg}}</span>
-    <label>
-      <span id="pwd">请输入密码：</span>
-      <input type="password" name="password" id="password" v-model="regisUser.password" @blur="checkPassword">
-    </label>
-    <span class="tip" id="passwordRegTip">{{passwordMsg}}</span>
-    <label>
-      <span id="rpwd">请确认密码：</span>
-      <input type="password" name="repeatPassword" id="repeatPassword" v-model="repPassword" @blur="checkRepeatPassword">
-    </label>
-    <span class="tip" id="repeatPasswordRegTip">{{repPasswordMsg}}</span>
-    <div id="btns">
-      <button class="btn" id="login" type="button" @click="handleRegister">注册</button>
-      <button class="btn" id="reset" type="button" @click="clearForm">重置</button>
-      <RouterLink to="/login" class="btn" id="register">去登录</RouterLink>
-    </div>
-  </form>
+  <div class="container">
+    <form>
+      <div class="form-control">
+        <input type="text" name="username" id="username" v-model="regisUser.username" @blur="checkUsername()">
+        <label>Username</label>
+        <span class="tip" id="usernameRegTip">{{ usernameMsg }}</span>
+      </div>
+      <div class="form-control">
+        <input type="password" name="password" id="password" v-model="regisUser.password" @blur="checkPassword()">
+        <label>Password</label>
+        <span class="tip" id="passwordRegTip">{{ passwordMsg }}</span>
+      </div>
+      <div class="form-control">
+        <input type="password" name="repeatPassword" id="repeatPassword" v-model="repPassword" @blur="checkRepeatPassword()">
+        <label>Password</label>
+        <span class="tip" id="passwordRegTip">{{ repPasswordMsg }}</span>
+      </div>
+      <div class="btn" id="login" @click="handleRegister">Register</div>
+      <p class="text">Have an account? </p><RouterLink to="/login" id="register">Login</RouterLink>
+    </form>
+  </div>
 </template>
 
 <style scoped>
-#content {
-  margin: 30px auto;
-  width: 400px;
-  text-align: center;
+* {
+  box-sizing: border-box;
+}
+@media (max-width: 380px) {
+  .form-control {
+    width: 180px;
+  }
+}
+.container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
 }
-label {
-  margin-bottom: 15px;
+.container > h1 {
+  margin-bottom: 30px;
 }
-#usr, #pwd, #rpwd {
-  display: inline-block;
-  width: 150px;
-  font-size: 20px;
+.container > form .form-control {
+  margin: 20px 0 40px;
+  width: 300px;
+  position: relative;
 }
-#usr {
-  letter-spacing: 1px;
-}
-#pwd, #rpwd {
-  margin-top: 15px;
-  letter-spacing: 4px;
-}
-input {
-  width: 200px;
-  height: 28px;
+.container > form .form-control > input {
+  display: block;
   border: none;
-  border-radius: 3px;
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 18px;
 }
-input:focus {
+.container > form .form-control > input:focus,
+.container > form .form-control > input:valid {
   outline: none;
 }
-#btns {
-  margin: 20px auto;
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
+.container > form .form-control > label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  pointer-events: none;
+  color: white;
 }
-.btn {
-  display: block;
-  margin: 0 10px;
-  letter-spacing: 2px;
-  font-size: 18px;
-  border-radius: 5px;
-  background-color: #7cdbef;
+.container > form .btn {
+  display: inline-block;
+  background-color: lightblue;
+  cursor: pointer;
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  font-family: inherit;
   border: none;
-  box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 auto;
 }
-.btn:hover {
-  opacity: 0.8;
-}
-.btn:active {
+.container > form .btn:active {
   transform: scale(0.98);
 }
-.btn:focus {
-  outline: none;
+.container > form .text {
+  margin-top: 30px;
+  display: inline-block;
+}
+.container > form .text > a {
+  text-decoration: none;
+  color: lightblue;
 }
 .tip {
-  color: red;
-  margin-left: 20px;
+  color: #d5ea4e;
+  float: right;
+  font-weight: 600;
+  text-shadow: 0 0 5px white;
 }
 </style>

@@ -3,6 +3,9 @@
 import { ref, reactive } from "vue";
 import {http} from "@/utils/request";
 import router from "@/router";
+import {useUserStore} from "@/stores/user";
+
+let userStore = useUserStore()
 
 let loginUser = reactive({
   username: '',
@@ -18,7 +21,7 @@ function checkUsername() {
     usernameMsg.value = '用户名格式不正确';
     return false;
   }
-  usernameMsg.value = 'OK';
+  usernameMsg.value = '';
   return true;
 }
 function checkPassword() {
@@ -28,17 +31,23 @@ function checkPassword() {
     passwordMsg.value = '密码格式不正确';
     return false;
   }
-  passwordMsg.value = 'OK';
+  passwordMsg.value = '';
   return true;
 }
-async function login() {
+async function doLogin() {
   let [flag1, flag2] = await Promise.all([checkUsername(), checkPassword()])
   if (flag1 && flag2) {
     let {data} = await http.post('user/login', loginUser)
     if (data.code === 200) {
+      console.log(data)
+      userStore.sysUser.uid = data.data.loginUser.uid
+      userStore.sysUser.username = data.data.loginUser.username
       await router.push('/showSchedule')
     }
   }
+}
+function login() {
+  doLogin()
 }
 function clearForm() {
   loginUser.username = ''
@@ -49,84 +58,99 @@ function clearForm() {
 </script>
 
 <template>
-  <form id="content">
-    <label>
-      <span id="usr">请输入用户名：</span>
-      <input type="text" name="username" id="username" v-model="loginUser.username" @blur="checkUsername()">
-    </label>
-    <span class="tip" id="usernameRegTip">{{ usernameMsg }}</span>
-    <label>
-      <span id="pwd">请输入密码：</span>
-      <input type="password" name="password" id="password" v-model="loginUser.password" @blur="checkPassword()">
-    </label>
-    <span class="tip" id="passwordRegTip">{{ passwordMsg }}</span>
-    <div id="btns">
-      <button class="btn" id="login" type="button" @click="login">登录</button>
-      <button class="btn" id="reset" type="button" @click="clearForm">重置</button>
-      <RouterLink to="/register" class="btn" id="register">去注册</RouterLink>
-    </div>
-  </form>
+  <div class="container">
+    <form>
+      <div class="form-control">
+        <input type="text" name="username" id="username" v-model="loginUser.username" @blur="checkUsername()">
+        <label>Username</label>
+        <span class="tip" id="usernameRegTip">{{ usernameMsg }}</span>
+      </div>
+      <div class="form-control">
+        <input type="password" name="password" id="password" v-model="loginUser.password" @blur="checkPassword()">
+        <label>Password</label>
+        <span class="tip" id="passwordRegTip">{{ passwordMsg }}</span>
+      </div>
+      <div class="btn" id="login" @click="login">Login</div>
+      <p class="text">Don't have an account? </p><RouterLink to="/register" id="register">Register</RouterLink>
+    </form>
+  </div>
 </template>
 
 <style scoped>
-#content {
-  margin: 30px auto;
-  width: 400px;
-  text-align: center;
+* {
+  box-sizing: border-box;
+}
+@media (max-width: 380px) {
+  .form-control {
+    width: 180px;
+  }
+}
+.container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
 }
-label {
-  margin-bottom: 15px;
+.container > h1 {
+  margin-bottom: 30px;
 }
-#usr, #pwd {
-  display: inline-block;
-  width: 150px;
-  font-size: 20px;
+.container > form .form-control {
+  margin: 20px 0 40px;
+  width: 300px;
+  position: relative;
 }
-#usr {
-  letter-spacing: 1px;
-}
-#pwd {
-  margin-top: 15px;
-  letter-spacing: 4px;
-}
-input {
-  width: 200px;
-  height: 28px;
+.container > form .form-control > input {
+  display: block;
   border: none;
-  border-radius: 3px;
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 18px;
 }
-input:focus {
+.container > form .form-control > input:focus,
+.container > form .form-control > input:valid {
   outline: none;
 }
-#btns {
-  margin: 20px auto;
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
+.container > form .form-control > label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  pointer-events: none;
+  color: white;
 }
-.btn {
-  display: block;
-  margin: 0 10px;
-  letter-spacing: 2px;
-  font-size: 18px;
-  border-radius: 5px;
-  background-color: #7cdbef;
+.container > form .btn {
+  display: inline-block;
+  background-color: lightblue;
+  cursor: pointer;
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  font-family: inherit;
   border: none;
-  box-shadow: 1px 2px 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 auto;
 }
-.btn:hover {
-  opacity: 0.8;
-}
-.btn:active {
+.container > form .btn:active {
   transform: scale(0.98);
 }
-.btn:focus {
-  outline: none;
+.container > form .text {
+  margin-top: 30px;
+  display: inline-block;
+}
+.container > form .text > a {
+  text-decoration: none;
+  color: lightblue;
 }
 .tip {
-  color: red;
-  margin-left: 20px;
+  color: #d5ea4e;
+  float: right;
+  font-weight: 600;
+  text-shadow: 0 0 5px white;
 }
 </style>

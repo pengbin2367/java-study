@@ -21,7 +21,6 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 service.interceptors.response.use((response: AxiosResponse) => {
     // 根据自定义错误码判断请求是否成功
     // 将组件用的数据返回
-    console.log(response)
     return response
 }, (error: AxiosError) => {
     // 处理 HTTP 网络错误
