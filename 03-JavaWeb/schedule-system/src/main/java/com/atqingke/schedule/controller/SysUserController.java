@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/user/*")
 public class SysUserController extends BaseController {
@@ -20,34 +22,36 @@ public class SysUserController extends BaseController {
     private final SysUserService sysUserService = new SysUserServiceImpl();
 
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        SysUser sysUser = sysUserService.findByUsername(username);
+        SysUser loginUser = WebUtil.readJson(req, SysUser.class);
+        SysUser sysUser = sysUserService.findByUsername(loginUser.getUsername());
+        Result result = null;
         if (sysUser == null) {
             // username error
-            resp.sendRedirect("/loginUsernameError.html");
-        } else if (!MD5Util.encrypt(password).equals(sysUser.getUserPwd())) {
+            result = Result.build(null, ResultCodeEnum.USERNAME_ERROR);
+        } else if (!MD5Util.encrypt(loginUser.getPassword()).equals(sysUser.getPassword())) {
             // password error
-            resp.sendRedirect("/loginPasswordError.html");
+            result = Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         } else {
             // login success
-            req.getSession().setAttribute("sysUser", sysUser);
-            resp.sendRedirect("/showSchedule.html");
+            Map data = new HashMap();
+            sysUser.setPassword("");
+            data.put("loginUser", sysUser);
+            result = Result.ok(data);
         }
+        WebUtil.writeJson(resp, result);
     }
 
     protected void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        System.out.println("username:" + username);
-        System.out.println("password:" + password);
-        SysUser sysUser = new SysUser(null, username, password);
+        SysUser sysUser = WebUtil.readJson(req, SysUser.class);
+        System.out.println(sysUser);
         int rows = sysUserService.register(sysUser);
-        if (rows > 0) {
-            resp.sendRedirect("/registerSuccess.html");
+        Result result = null;
+        if (rows < 1) {
+            result = Result.build(null, ResultCodeEnum.USERNAME_USED);
         } else {
-            resp.sendRedirect("/registerFail.html");
+            result = Result.ok("success");
         }
+        WebUtil.writeJson(resp, result);
     }
 
     protected void checkUsernameUsed(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

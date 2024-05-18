@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
 import { ref, reactive } from "vue";
+import {http} from "@/utils/request";
+import router from "@/router";
 
 let loginUser = reactive({
   username: '',
@@ -29,10 +31,25 @@ function checkPassword() {
   passwordMsg.value = 'OK';
   return true;
 }
+async function login() {
+  let [flag1, flag2] = await Promise.all([checkUsername(), checkPassword()])
+  if (flag1 && flag2) {
+    let {data} = await http.post('user/login', loginUser)
+    if (data.code === 200) {
+      await router.push('/showSchedule')
+    }
+  }
+}
+function clearForm() {
+  loginUser.username = ''
+  loginUser.password = ''
+  usernameMsg.value = ''
+  passwordMsg.value = ''
+}
 </script>
 
 <template>
-  <form id="content" method="post" action="/user/login">
+  <form id="content">
     <label>
       <span id="usr">请输入用户名：</span>
       <input type="text" name="username" id="username" v-model="loginUser.username" @blur="checkUsername()">
@@ -44,8 +61,8 @@ function checkPassword() {
     </label>
     <span class="tip" id="passwordRegTip">{{ passwordMsg }}</span>
     <div id="btns">
-      <button class="btn" id="login" type="submit">登录</button>
-      <button class="btn" id="reset" type="reset">重置</button>
+      <button class="btn" id="login" type="button" @click="login">登录</button>
+      <button class="btn" id="reset" type="button" @click="clearForm">重置</button>
       <RouterLink to="/register" class="btn" id="register">去注册</RouterLink>
     </div>
   </form>

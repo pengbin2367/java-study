@@ -17,7 +17,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public int register(SysUser sysUser) {
-        sysUser.setUserPwd(MD5Util.encrypt(sysUser.getUserPwd()));
+        sysUser.setPassword(MD5Util.encrypt(sysUser.getPassword()));
         return sysUserDao.register(sysUser);
     }
 }
