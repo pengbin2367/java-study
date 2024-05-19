@@ -5,3 +5,4 @@ mvnw.cmd
 .mvn
 target
 00-DS/leetcode/editor/cn/doc/content/*
+00-DS/leetcode/editor/cn/doc/solution/*
