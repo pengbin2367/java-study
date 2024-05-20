@@ -8,11 +8,10 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      url: jdbc:mysql:///sm_db
-      username: root
-      password: root
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sm_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 # mybatis-plus的配置
 mybatis-plus:
@@ -22,3 +21,9 @@ mybatis-plus:
       logic-delete-field: isDeleted  #全局逻辑删除
       id-type: auto #主键策略自增长
       table-prefix: news_ # 设置表的前缀
+
+#jwt配置
+jwt:
+  token:
+    tokenExpiration: 120 #有效时间,单位分钟
+    tokenSignKey: qingke-top-news  #当前程序签名秘钥 自定义
