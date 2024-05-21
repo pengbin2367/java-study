@@ -28,6 +28,6 @@ mysql -uroot -proot
 docker run -p 3306:3306 --privileged=true -v /docker/mysql/log:/var/log/mysql -v /docker/mysql/data:/var/lib/mysql -v /docker/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root --name mysql -d mysql
 
 
-Install Redis
+Install Redis7
 
-docker run -p 6379:6379 --name redis --privileged=true -v /docker/redis/data:/data -v /docker/redis/redis.conf:/etc/redis/redis.conf -d redis redis-server /etc/redis/redis.conf
+docker run -p 6379:6379 --name redis --privileged=true --restart=always -v /docker/redis/data:/data -v /docker/redis/redis.conf:/etc/redis/redis.conf -d redis redis-server /etc/redis/redis.conf
