@@ -18,6 +18,11 @@
     </properties>
     
     <dependencies>
+        <!-- nacos作为注册中心的依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
         <!-- spring boot的web开发所需要的起步依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
