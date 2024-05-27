@@ -1,13 +1,14 @@
 package com.atqingke.spzx.cloud.user.controller;
 
 import com.atqingke.spzx.cloud.model.entity.user.User;
+import com.atqingke.spzx.cloud.user.properties.PatternProperties;
 import com.atqingke.spzx.cloud.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserController {
@@ -15,8 +16,15 @@ public class UserController {
     @Autowired
     private UserService userService ;
 
+    @Value("${pattern.dateformat}")
+    private String pattern ;
+
+    @Autowired
+    PatternProperties patternProperties;
+
     @GetMapping(value = "/findUserByUserId/{userId}")
-    public User findUserByUserId(@PathVariable(value = "userId") Long userId) {
+    public User findUserByUserId(@PathVariable(value = "userId") Long userId , @RequestHeader(name = "Truth")String header) {
+        log.info("UserController...findUserByUserId方法执行了... ,header: {} , dateformat: {} " , header , patternProperties.getDateformat());
         return userService.findUserByUserId(userId) ;
     }
 

@@ -17,6 +17,9 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
+  config:
+    import:
+      - nacos:spzx-cloud-user-dev.yml
   application:
     name: spzx-cloud-user
 
