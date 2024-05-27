@@ -2,6 +2,7 @@ package com.atqingke.spzx.cloud.order.service.impl;
 
 import com.atqingke.spzx.cloud.order.entity.Order;
 import com.atqingke.spzx.cloud.order.entity.User;
+import com.atqingke.spzx.cloud.order.feign.UserFeignClient;
 import com.atqingke.spzx.cloud.order.mapper.OrderMapper;
 import com.atqingke.spzx.cloud.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     DiscoveryClient discoveryClient;
 
+    @Autowired
+    UserFeignClient userFeignClient;
+
     @Override
     public Order findOrderByOrderId(Long orderId) {
         Order order = orderMapper.findOrderByOrderId(orderId);
 
-        ServiceInstance serviceInstance = findServiceInstance("spzx-cloud-user");
-
-        User user = restTemplate.getForObject("http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/api/user/findUserByUserId/" + order.getUserId(), User.class);
+        User user = userFeignClient.queryById(order.getUserId());
         order.setUser(user);
 
         return order;
