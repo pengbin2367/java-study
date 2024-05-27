@@ -1,4 +1,4 @@
-package com.atqingke.spzx.cloud.user.entity;
+package com.atqingke.spzx.cloud.model.entity.user;
 
 import lombok.Data;
 

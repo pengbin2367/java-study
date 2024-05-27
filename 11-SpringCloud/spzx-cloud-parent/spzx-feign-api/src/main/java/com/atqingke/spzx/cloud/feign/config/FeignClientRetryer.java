@@ -1,4 +1,4 @@
-package com.atqingke.spzx.cloud.order.feign;
+package com.atqingke.spzx.cloud.feign.config;
 
 import feign.RetryableException;
 import feign.Retryer;

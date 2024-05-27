@@ -1,8 +1,8 @@
 package com.atqingke.spzx.cloud.order.service.impl;
 
-import com.atqingke.spzx.cloud.order.entity.Order;
-import com.atqingke.spzx.cloud.order.entity.User;
-import com.atqingke.spzx.cloud.order.feign.UserFeignClient;
+import com.atqingke.spzx.cloud.feign.api.UserFeignClient;
+import com.atqingke.spzx.cloud.model.entity.order.Order;
+import com.atqingke.spzx.cloud.model.entity.user.User;
 import com.atqingke.spzx.cloud.order.mapper.OrderMapper;
 import com.atqingke.spzx.cloud.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

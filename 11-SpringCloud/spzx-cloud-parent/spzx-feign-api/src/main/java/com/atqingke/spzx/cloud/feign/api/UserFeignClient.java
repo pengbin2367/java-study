@@ -1,6 +1,6 @@
-package com.atqingke.spzx.cloud.order.feign;
+package com.atqingke.spzx.cloud.feign.api;
 
-import com.atqingke.spzx.cloud.order.entity.User;
+import com.atqingke.spzx.cloud.model.entity.user.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

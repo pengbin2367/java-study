@@ -1,6 +1,6 @@
 package com.atqingke.spzx.cloud.user.service.impl;
 
-import com.atqingke.spzx.cloud.user.entity.User;
+import com.atqingke.spzx.cloud.model.entity.user.User;
 import com.atqingke.spzx.cloud.user.mapper.UserMapper;
 import com.atqingke.spzx.cloud.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.atqingke.spzx.cloud.order.controller;
 
-import com.atqingke.spzx.cloud.order.entity.Order;
+import com.atqingke.spzx.cloud.model.entity.order.Order;
 import com.atqingke.spzx.cloud.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

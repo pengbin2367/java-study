@@ -1,5 +1,6 @@
-package com.atqingke.spzx.cloud.order.entity;
+package com.atqingke.spzx.cloud.model.entity.order;
 
+import com.atqingke.spzx.cloud.model.entity.user.User;
 import lombok.Data;
 
 import java.math.BigDecimal;

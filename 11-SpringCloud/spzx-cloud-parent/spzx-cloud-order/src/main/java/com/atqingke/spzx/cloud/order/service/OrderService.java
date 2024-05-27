@@ -1,6 +1,6 @@
 package com.atqingke.spzx.cloud.order.service;
 
-import com.atqingke.spzx.cloud.order.entity.Order;
+import com.atqingke.spzx.cloud.model.entity.order.Order;
 
 public interface OrderService {
 

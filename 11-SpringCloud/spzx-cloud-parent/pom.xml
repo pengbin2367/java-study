@@ -11,6 +11,8 @@
     <modules>
         <module>spzx-cloud-user</module>
         <module>spzx-cloud-order</module>
+        <module>spzx-cloud-model</module>
+        <module>spzx-feign-api</module>
     </modules>
     
     <properties>

@@ -1,4 +1,4 @@
-package com.atqingke.spzx.cloud.order.config;
+package com.atqingke.spzx.cloud.feign.config;
 
 import feign.Logger;
 

@@ -1,6 +1,6 @@
 package com.atqingke.spzx.cloud.user.service;
 
-import com.atqingke.spzx.cloud.user.entity.User;
+import com.atqingke.spzx.cloud.model.entity.user.User;
 
 public interface UserService {
 

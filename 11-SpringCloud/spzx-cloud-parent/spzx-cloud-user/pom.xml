@@ -18,6 +18,11 @@
     </properties>
     
     <dependencies>
+        <dependency>
+            <groupId>com.atqingke.spzx</groupId>
+            <artifactId>spzx-cloud-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- nacos作为注册中心的依赖 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients
+@EnableFeignClients(basePackages = {
+        "com.atqingke.spzx.cloud.feign.api"
+})
 @SpringBootApplication
 public class OrderApplication {
 
