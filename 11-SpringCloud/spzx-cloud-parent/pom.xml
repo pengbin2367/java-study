@@ -13,6 +13,7 @@
         <module>spzx-cloud-order</module>
         <module>spzx-cloud-model</module>
         <module>spzx-feign-api</module>
+        <module>spzx-cloud-gateway</module>
     </modules>
     
     <properties>

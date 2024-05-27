@@ -1,0 +1,20 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: spzx-cloud-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: spzx-cloud-user				# 路由id，可以自定义，只要唯一即可
+          uri: lb://spzx-cloud-user		    # 路由的目标地址 lb就是负载均衡，后面跟服务名称
+          predicates:
+            - Path=/api/user/**			    # 这个是按照路径匹配，只要以/user/开头就符合要求
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]  # 系统时间在2017-01-20之后才可以进行访问
+          filters:
+            - AddRequestHeader=Truth1, atqingke        # 配置路由基本的过滤器，给访问user微服务的所有接口添加Truth请求头
+      default-filters:
+        - AddRequestHeader=Truth2, atqingke is good
