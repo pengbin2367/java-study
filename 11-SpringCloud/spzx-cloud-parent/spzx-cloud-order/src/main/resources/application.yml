@@ -12,6 +12,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        cluster-name: SZ
   application:
     name: spzx-cloud-order
 # 配置mybatis的相关信息
