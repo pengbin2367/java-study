@@ -25,6 +25,26 @@ spring:
     sentinel:
       transport:
         dashboard: localhost:8858
+      datasource:
+        ds1:
+          nacos:
+            serverAddr: localhost:8848
+            dataId: sentinel-rules
+            groupId: DEFAULT_GROUP
+            dataType: json
+            ruleType: flow
+  # nacos config
+  #     [
+  #         {
+  #              "resource": "/testA",
+  #              "limitApp": "default",
+  #              "grade": 1,
+  #              "count": 1,
+  #              "strategy": 0,
+  #              "controlBehavior": 0,
+  #              "clusterMode": false
+  #         }
+  #     ]
   application:
     name: spzx-cloud-order
 
