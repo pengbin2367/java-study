@@ -17,9 +17,13 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
-  config:
-    import:
-      - nacos:spzx-cloud-user-dev.yml
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      web-context-unify: false
+  #  config:
+#    import:
+#      - nacos:spzx-cloud-user-dev.yml
   application:
     name: spzx-cloud-user
 
@@ -27,5 +31,5 @@ spring:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.atguigu.spzx.cloud.user.entity
+  type-aliases-package: com.atqingke.spzx.cloud.model.entity.user
   mapper-locations: classpath:/mapper/*.xml

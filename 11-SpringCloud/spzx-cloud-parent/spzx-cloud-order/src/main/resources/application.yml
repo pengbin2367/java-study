@@ -27,10 +27,10 @@ spring:
 # 将feign包下产生的日志的级别设置为debug
 logging:
   level:
-    com.atguigu.spzx.cloud.order.feign: debug
+    com.atqingke.spzx.cloud.order.feign: debug
 # 配置mybatis的相关信息
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.atguigu.spzx.cloud.order.entity
+  type-aliases-package: com.atqingke.spzx.cloud.model.entity.order
   mapper-locations: classpath:/mapper/*.xml

@@ -16,15 +16,15 @@ public class UserController {
     @Autowired
     private UserService userService ;
 
-    @Value("${pattern.dateformat}")
-    private String pattern ;
+//    @Value("${pattern.dateformat}")
+//    private String pattern ;
 
-    @Autowired
-    PatternProperties patternProperties;
+//    @Autowired
+//    PatternProperties patternProperties;
 
     @GetMapping(value = "/findUserByUserId/{userId}")
     public User findUserByUserId(@PathVariable(value = "userId") Long userId , @RequestHeader(name = "Truth")String header) {
-        log.info("UserController...findUserByUserId方法执行了... ,header: {} , dateformat: {} " , header , patternProperties.getDateformat());
+        log.info("UserController...findUserByUserId方法执行了... ,header: {}" , header);
         return userService.findUserByUserId(userId) ;
     }
 
