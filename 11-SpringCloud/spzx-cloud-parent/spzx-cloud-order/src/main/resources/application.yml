@@ -22,8 +22,12 @@ spring:
             read-timeout: 2000           # 读取数据的超时时间设置为2s
             connect-timeout: 2000        # 建立连接的超时时间设置为2s
             retryer: com.atqingke.spzx.cloud.feign.config.FeignClientRetryer		# 配置自定义重试器
+    sentinel:
+      transport:
+        dashboard: localhost:8858
   application:
     name: spzx-cloud-order
+
 # 将feign包下产生的日志的级别设置为debug
 logging:
   level:
@@ -34,3 +38,6 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.atqingke.spzx.cloud.model.entity.order
   mapper-locations: classpath:/mapper/*.xml
+feign:
+  sentinel:
+    enabled: true

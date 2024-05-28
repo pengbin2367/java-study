@@ -1,5 +1,6 @@
 package com.atqingke.spzx.cloud.user.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.atqingke.spzx.cloud.model.entity.user.User;
 import com.atqingke.spzx.cloud.user.properties.PatternProperties;
 import com.atqingke.spzx.cloud.user.service.UserService;
@@ -22,6 +23,7 @@ public class UserController {
 //    @Autowired
 //    PatternProperties patternProperties;
 
+    @SentinelResource("hot")
     @GetMapping(value = "/findUserByUserId/{userId}")
     public User findUserByUserId(@PathVariable(value = "userId") Long userId , @RequestHeader(name = "Truth")String header) {
         log.info("UserController...findUserByUserId方法执行了... ,header: {}" , header);
