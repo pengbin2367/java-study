@@ -14,6 +14,7 @@
         <module>spzx-cloud-model</module>
         <module>spzx-feign-api</module>
         <module>spzx-cloud-gateway</module>
+        <module>spzx-cloud-sba</module>
     </modules>
     
     <properties>

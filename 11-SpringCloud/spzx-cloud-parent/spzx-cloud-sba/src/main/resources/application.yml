@@ -1,0 +1,12 @@
+# application.yml文件内容
+server:
+  port: 20100
+
+# bootstrap.yml文件
+spring:
+  application:
+    name: spzx-cloud-sba
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

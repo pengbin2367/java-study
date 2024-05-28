@@ -61,3 +61,12 @@ mybatis:
 feign:
   sentinel:
     enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"    # 开启所有需要监控的指标端点
+  endpoint:
+    health:
+      show-details: always

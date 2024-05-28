@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-public class UserFeignClientFallback implements UserFeignClient {
+//@Component
+public class UserFeignClientFallback/* implements UserFeignClient*/ {
 
-    @Override
+//    @Override
     public User queryById(Long userId) {
         log.info("UserFeignClientFallback...queryById...方法执行了...");
         return new User();
