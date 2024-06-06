@@ -1,2 +1,28 @@
 server:
   port: 8001
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://mysql:3308/temp?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+  # Redis的相关配置
+  data:
+    redis:
+      host: redis
+      port: 6381
+      password: redis
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+
+# mybatis的配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.atqingke.docker.pojo

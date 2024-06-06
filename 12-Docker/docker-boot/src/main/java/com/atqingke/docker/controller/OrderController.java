@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-@RequestMapping("order")
+@RequestMapping("admin/order")
 @RestController
 public class OrderController {
 

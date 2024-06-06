@@ -1,0 +1,53 @@
+# 配置各个容器服务
+services:
+  dockerBoot:
+    image: pengbin-docker-compose:1.0
+    container_name: qingke  # 容器名称，如果不指定，会生成一个服务名加上前缀的容器名
+    ports:
+      - "8001:8001"
+    volumes:
+      - /docker/docker-boot/volume:/data
+    networks:
+      - pengbin
+    depends_on:  # 配置该容器服务所依赖的容器服务
+      - redis
+      - mysql
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "6381:6379"
+    volumes:
+      - /docker/docker-boot/redis/redis.conf:/etc/redis/redis.conf
+      - /docker/docker-boot/redis/data:/data
+    networks:
+      - pengbin
+    command: redis-server /etc/redis/redis.conf
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+#      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_DATABASE: 'temp'
+      MYSQL_USER: 'pengbin'
+      MYSQL_PASSWORD: 'pengbin'
+    ports:
+      - "3308:3306"
+    volumes:
+      - /docker/docker-boot/mysql/db:/var/lib/mysql
+      - /docker/docker-boot/mysql/conf/my.cnf:/etc/my.cnf
+      # 将init.sql文件放在这里的init文件夹下，会自动执行init.sql里的建表语句
+      - /docker/docker-boot/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - pengbin
+#    command: --default-authentication-plugin=mysql_native_password # 解决外部无法访问
+    command: [ #使用command可以覆盖容器启动后默认执行的命令
+      '--character-set-server=utf8mb4',            #设置数据库表的数据集
+      '--collation-server=utf8mb4_unicode_ci',     #设置数据库表的数据集
+      '--default-time-zone=+8:00'                  #设置mysql数据库的时区问题
+    ]
+    restart: always
+    privileged: true                                        #启动拥有特权模式
+networks:
+  pengbin:
