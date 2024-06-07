@@ -1,0 +1,52 @@
+version: '3.8'
+
+volumes:
+  grafana_data: {}
+
+services:
+  influxdb:
+    image: influxdb:latest
+    restart: always
+    environment:
+      - INFLUXDB_DB=cadvisor
+      - INFLUXDB_HTTP_ENABLED=true   # 开启 InfluxDB 的 HTTP API
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - /docker/influx/data/influxdb:/var/lib/influxdb
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    links:
+      - influxdb:influxsrv
+    command:
+      - -storage_driver=influxdb
+      - -storage_driver_db=cadvisor
+      - -storage_driver_host=influxsrv:8086
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    links:
+      - influxdb:influxsrv
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - INFLUXDB_HOST=influxsrv
+      - INFLUXDB_PORT=8086
+    depends_on:
+      - influxdb
