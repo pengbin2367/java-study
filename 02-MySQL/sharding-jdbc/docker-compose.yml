@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  mysql_master:
+    image: mysql:latest
+    container_name: mysql_master
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./mysql_master_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf   # 挂载自定义的 my.cnf 文件
+      - mysql_master_data:/docker/mysql/master
+
+  mysql_slave1:
+    image: mysql:latest
+    container_name: mysql_slave1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_MASTER_HOST: mysql_master
+      MYSQL_MASTER_PORT: 3310
+      MYSQL_MASTER_ROOT_PASSWORD: root
+    depends_on:
+      - mysql_master
+    ports:
+      - "3311:3306"
+    volumes:
+      - ./mysql_slave1_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
+      - mysql_slave1_data:/docker/mysql/slave1
+
+  mysql_slave2:
+    image: mysql:latest
+    container_name: mysql_slave2
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_MASTER_HOST: mysql_master
+      MYSQL_MASTER_PORT: 3310
+      MYSQL_MASTER_ROOT_PASSWORD: root
+    depends_on:
+      - mysql_master
+    ports:
+      - "3312:3306"
+    volumes:
+      - ./mysql_slave2_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
+      - mysql_slave2_data:/docker/mysql/slave2
+volumes:
+  mysql_master_data:
+  mysql_slave1_data:
+  mysql_slave2_data:
+#  CREATE USER 'pengbin'@'%';
+#  ALTER USER 'pengbin'@'%' IDENTIFIED WITH mysql_native_password BY 'pengbin';
+# GRANT REPLICATION SLAVE ON *.* TO 'pengbin'@'%';
+#  FLUSH PRIVILEGES;
+# CHANGE MASTER TO MASTER_HOST='mysql_master', MASTER_PORT=3306, MASTER_USER='pengbin', MASTER_PASSWORD='pengbin', MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=1056;
