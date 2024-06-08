@@ -10,7 +10,7 @@ services:
     ports:
       - "3310:3306"
     volumes:
-      - ./mysql_master_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf   # 挂载自定义的 my.cnf 文件
+      - ./tt-docker-compose/MySQLMasterSlave/mysql_master_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf   # 挂载自定义的 my.cnf 文件
       - mysql_master_data:/docker/mysql/master
 
   mysql_slave1:
@@ -27,7 +27,7 @@ services:
     ports:
       - "3311:3306"
     volumes:
-      - ./mysql_slave1_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
+      - ./tt-docker-compose/MySQLMasterSlave/mysql_slave1_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
       - mysql_slave1_data:/docker/mysql/slave1
 
   mysql_slave2:
@@ -44,7 +44,7 @@ services:
     ports:
       - "3312:3306"
     volumes:
-      - ./mysql_slave2_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
+      - ./tt-docker-compose/MySQLMasterSlave/mysql_slave2_custom.cnf:/etc/mysql/conf.d/mysql_custom.cnf
       - mysql_slave2_data:/docker/mysql/slave2
 volumes:
   mysql_master_data:
