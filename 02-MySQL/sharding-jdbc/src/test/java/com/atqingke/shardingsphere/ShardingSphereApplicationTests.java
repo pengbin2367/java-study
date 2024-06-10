@@ -47,4 +47,38 @@ public class ShardingSphereApplicationTests {
         User user = userMapper.selectById(1L);
         Order order = orderMapper.selectById(1L);
     }
+
+    @Test
+    public void testInsertOrder(){
+        Order order = new Order();
+        order.setOrderNo("ATGUIGU001");
+        order.setUserId(1L);
+        orderMapper.insert(order);
+    }
+
+    @Test
+    public void testInsertOrderDatabaseStrategy(){
+        for (long i = 0; i < 4; i++) {
+            Order order = new Order();
+            order.setOrderNo("ATGUIGU" + System.currentTimeMillis());
+            order.setUserId(i + 1);
+            orderMapper.insert(order);
+        }
+    }
+
+    @Test
+    public void testInsertOrderTableStrategy(){
+        for (long i = 0; i < 4; i++) {
+            Order order = new Order();
+            order.setOrderNo("ATGUIGU" + System.currentTimeMillis());
+            order.setUserId(1L);
+            orderMapper.insert(order);
+        }
+        for (long i = 0; i < 4; i++) {
+            Order order = new Order();
+            order.setOrderNo("ATGUIGU" + System.currentTimeMillis());
+            order.setUserId(2L);
+            orderMapper.insert(order);
+        }
+    }
 }

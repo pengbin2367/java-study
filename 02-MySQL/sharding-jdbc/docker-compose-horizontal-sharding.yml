@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  server-order0:
+    image: mysql:latest
+    container_name: server-order0
+    restart: always
+    ports:
+        - "3318:3306"
+    volumes:
+        - /docker/mysql/server/orde0:/var/lib/mysql
+        - ./tt-docker-compose/HorizontalSharding/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  server-order1:
+    image: mysql:latest
+    container_name: server-order1
+    restart: always
+    ports:
+        - "3319:3306"
+    volumes:
+        - /docker/mysql/server/orde1:/var/lib/mysql
+        - ./tt-docker-compose/HorizontalSharding/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
