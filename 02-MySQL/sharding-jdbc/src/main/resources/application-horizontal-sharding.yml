@@ -45,6 +45,32 @@ dataSources:
 #        props:
 #          algorithm-expression: order_ds_${user_id % 2}
 # 水平分表配置
+#rules:
+#  - !SHARDING
+#    tables:
+#      t_user:
+#        actualDataNodes: user_ds.t_user
+#      t_order:
+#        actualDataNodes: order_ds_${0..1}.t_order${0..1}
+#        databaseStrategy:
+#          standard:
+#            shardingColumn: user_id
+#            shardingAlgorithmName: userid_inline
+#        tableStrategy:
+#          standard:
+#            shardingColumn: id
+#            shardingAlgorithmName: orderid_inline
+#
+#    shardingAlgorithms:
+#      userid_inline:
+#        type: INLINE
+#        props:
+#          algorithm-expression: order_ds_${user_id % 2}
+#      orderid_inline:
+#        type: INLINE
+#        props:
+#          algorithm-expression: t_order${id % 2}
+
 rules:
   - !SHARDING
     tables:
@@ -60,6 +86,16 @@ rules:
           standard:
             shardingColumn: id
             shardingAlgorithmName: orderid_inline
+      t_order_item:
+        actualDataNodes: order_ds_${0..1}.t_order_item${0..1}
+        databaseStrategy:
+          standard:
+            shardingColumn: user_id
+            shardingAlgorithmName: userid_inline
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: orderid_item_inline
 
     shardingAlgorithms:
       userid_inline:
@@ -70,5 +106,10 @@ rules:
         type: INLINE
         props:
           algorithm-expression: t_order${id % 2}
+      orderid_item_inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_order_item${order_id % 2}
+
 props:
   sql-show: true
