@@ -1,0 +1,9 @@
+spring:
+  kafka:
+    bootstrap-servers: 192.168.0.166:9092,192.168.0.166:9093,192.168.0.166:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      properties:
+        bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094
