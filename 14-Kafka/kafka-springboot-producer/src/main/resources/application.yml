@@ -5,6 +5,8 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #      value-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
     admin:
       properties:
         bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094

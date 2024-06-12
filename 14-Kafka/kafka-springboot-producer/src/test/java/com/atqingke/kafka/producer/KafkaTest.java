@@ -58,4 +58,12 @@ public class KafkaTest {
             kafkaTemplate.send(topicName, userDTO);
         }
     }
+
+    @Test
+    public void testSendMessageRoundRobin() {
+        String topicName = "topic-spring-boot";
+        for (int i = 0; i < 50; i++) {
+            kafkaTemplate.send(topicName, null, null, new UserDTO("robin" + i, i*10, i*100+""));
+        }
+    }
 }
