@@ -8,6 +8,7 @@ spring:
       properties:
 #        partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
         partitioner.class: com.atqingke.kafka.producer.config.AtQingKePartitioner
+      retries: 0
     admin:
       properties:
         bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094
