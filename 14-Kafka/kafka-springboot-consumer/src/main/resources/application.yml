@@ -1,0 +1,12 @@
+spring:
+  kafka:
+    bootstrap-servers: 192.168.0.166:9092,192.168.0.166:9093,192.168.0.166:9094
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: consumer-group
+    admin:
+      properties:
+        bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094
+server:
+  port: 9099
