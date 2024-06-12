@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 @SpringBootTest
@@ -100,5 +101,17 @@ public class KafkaTest {
             // 每条消息发送到不同分区，看看消费端接收消息的顺序
             kafkaTemplate.send(topicName, i % 3, null, new UserDTO("order" + i, i * 10, i * 100 + "")).get();
         }
+    }
+
+    @Test
+    public void testTx() {
+        kafkaTemplate.executeInTransaction(operations -> {
+            String topicName = "topic-spring-boot";
+            for (String s : Arrays.asList("transaction message 01~~~@@@", "transaction message 02~~~@@@", "transaction message 03~~~@@@")) {
+                operations.send(topicName, s);
+            }
+            System.out.println(10 / 0);
+            return null;
+        });
     }
 }

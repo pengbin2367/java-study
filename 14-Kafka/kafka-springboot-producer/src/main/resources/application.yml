@@ -8,7 +8,7 @@ spring:
       properties:
 #        partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
         partitioner.class: com.atqingke.kafka.producer.config.AtQingKePartitioner
-      retries: 0
+      retries: 1
       # 0：生产者发送数据后就不管了，不会等待broker的ack，这个延迟最低但是存储的保证最弱。当server挂掉的时候就会丢数据
       # 1：默认值，生产者会等待ack值 ，leader确认接收到消息后发送ack，不需要follower确认。但是如果leader挂掉后他不确保消息是否同步到了所有的follower中，新leader也会导致数据丢失，可靠性中等，效率中等。
       # -1(all)：生产者会等所有的follower的副本受到数据后才会收到leader发出的ack，也即Leader和ISR队列里面所有Follwer应答，可靠性最高、效率最低
@@ -16,6 +16,7 @@ spring:
       #  acks=1      	一般用于传输普通日志，允许丢个别数据
       #  acks=-1(all)	一般用于传输重要不能丢失的数据(例如：钱、订单、积分等)，对可靠性要求比较高的场景
       acks: -1
+      transaction-id-prefix: tx_
     admin:
       properties:
         bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094
