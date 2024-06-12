@@ -66,4 +66,12 @@ public class KafkaTest {
             kafkaTemplate.send(topicName, null, null, new UserDTO("robin" + i, i*10, i*100+""));
         }
     }
+
+    @Test
+    public void testMyPartitioner() {
+        String topicName = "topic-spring-boot";
+        kafkaTemplate.send(topicName, "zhu zhu atqingke zhu");
+        kafkaTemplate.send(topicName, "zhu zhu pengbin zhu");
+        kafkaTemplate.send(topicName, "zhu zhu happy zhu");
+    }
 }
