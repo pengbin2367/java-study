@@ -48,6 +48,8 @@ public class KafkaMessageListener {
                     }
             )
     })
+    // concurrency属性设置的是消费端从消息队列取回消息时，并发的线程数量：
+    // @KafkaListener(topics = {"topic-spring-boot"}, concurrency = "3")
     public void simpleConsumerPartition(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
         System.out.println(record.partition() + " " + record.offset() + " " + record.value());
 
