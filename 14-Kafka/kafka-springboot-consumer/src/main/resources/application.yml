@@ -5,6 +5,9 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: consumer-group
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual
     admin:
       properties:
         bootstrap.servers: kafka1:9092,kafka2:9093,kafka3:9094
