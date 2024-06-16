@@ -5,8 +5,8 @@ import com.atqingke.springframework.beans.PropertyValues;
 import com.atqingke.springframework.beans.factory.config.BeanDefinition;
 import com.atqingke.springframework.beans.factory.config.BeanReference;
 import com.atqingke.springframework.beans.factory.support.DefaultListableBeanFactory;
-import com.atqingke.springframework.test.Bean.UserDao;
-import com.atqingke.springframework.test.Bean.UserService;
+import com.atqingke.springframework.test.bean.UserDao;
+import com.atqingke.springframework.test.bean.UserService;
 import org.junit.Test;
 
 public class ApiTest {

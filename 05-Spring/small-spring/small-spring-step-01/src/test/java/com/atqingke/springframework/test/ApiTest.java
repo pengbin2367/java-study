@@ -2,7 +2,7 @@ package com.atqingke.springframework.test;
 
 import com.atqingke.springframework.BeanDefinition;
 import com.atqingke.springframework.BeanFactory;
-import com.atqingke.springframework.test.Bean.UserService;
+import com.atqingke.springframework.test.bean.UserService;
 import org.junit.Test;
 
 public class ApiTest {

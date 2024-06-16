@@ -2,7 +2,7 @@ package com.atqingke.springframework.test;
 
 import com.atqingke.springframework.beans.factory.config.BeanDefinition;
 import com.atqingke.springframework.beans.factory.support.DefaultListableBeanFactory;
-import com.atqingke.springframework.test.Bean.UserService;
+import com.atqingke.springframework.test.bean.UserService;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;

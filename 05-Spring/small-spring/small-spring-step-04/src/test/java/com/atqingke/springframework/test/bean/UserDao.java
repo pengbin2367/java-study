@@ -1,4 +1,4 @@
-package com.atqingke.springframework.test.Bean;
+package com.atqingke.springframework.test.bean;
 
 import java.util.HashMap;
 import java.util.Map;
