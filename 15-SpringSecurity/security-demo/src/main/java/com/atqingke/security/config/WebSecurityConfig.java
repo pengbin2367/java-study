@@ -29,6 +29,11 @@ public class WebSecurityConfig {
                             .failureHandler(new MyAuthenticationFailureHandler())
                     ;
                 })
+                .sessionManagement(session -> {
+                    session
+                            .maximumSessions(1)
+                            .expiredSessionStrategy(new MySessionInformationExpiredStrategy());
+                })
                 .logout(logout -> {
                     logout.logoutSuccessHandler(new MyLogoutSuccessHandler());
                 })
