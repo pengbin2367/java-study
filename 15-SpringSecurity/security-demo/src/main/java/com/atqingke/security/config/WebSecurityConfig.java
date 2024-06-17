@@ -18,7 +18,15 @@ public class WebSecurityConfig {
         //anyRequest()：对所有请求开启授权保护
         //authenticated()：已认证请求会自动被授权
         http
-                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+                .authorizeRequests(authorize -> {
+                    authorize
+                            .requestMatchers("/user/list").hasAuthority("USER_LIST")
+                            .requestMatchers("/user/add").hasAuthority("USER_ADD")
+                            .requestMatchers("/user/**").hasRole("ADMIN")
+                            .anyRequest()
+                            .authenticated()
+                    ;
+                })
                 .formLogin( form -> {
                     form
                             .loginPage("/login").permitAll() //登录页面无需授权即可访问
@@ -32,13 +40,17 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> {
                     session
                             .maximumSessions(1)
-                            .expiredSessionStrategy(new MySessionInformationExpiredStrategy());
+                            .expiredSessionStrategy(new MySessionInformationExpiredStrategy())
+                    ;
                 })
                 .logout(logout -> {
                     logout.logoutSuccessHandler(new MyLogoutSuccessHandler());
                 })
                 .exceptionHandling(ex -> {
-                    ex.authenticationEntryPoint(new MyAuthenticationEntryPoint());
+                    ex
+                            .authenticationEntryPoint(new MyAuthenticationEntryPoint())
+                            .accessDeniedHandler(new MyAccessDeniedHandler())
+                    ;
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
