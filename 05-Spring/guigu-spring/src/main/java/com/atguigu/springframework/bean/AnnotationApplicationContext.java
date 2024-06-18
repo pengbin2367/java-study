@@ -1,13 +1,16 @@
 package com.atguigu.springframework.bean;
 
 import com.atguigu.springframework.anno.Bean;
+import com.atguigu.springframework.anno.Di;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AnnotationApplicationContext implements ApplicationContext {
 
@@ -23,9 +26,26 @@ public class AnnotationApplicationContext implements ApplicationContext {
                 String finalPath = url.getPath();
                 // scan package
                 loadBean(new File(finalPath));
+                loadDi();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void loadDi() throws IllegalAccessException {
+        Set<Map.Entry<Class, Object>> entries = beanFactory.entrySet();
+        for (Map.Entry<Class, Object> entry : entries) {
+            Object obj = entry.getValue();
+            Class<?> aClass = obj.getClass();
+            Field[] fields = aClass.getDeclaredFields();
+            for (Field field : fields) {
+                Di di = field.getAnnotation(Di.class);
+                if (di != null) {
+                    field.setAccessible(true);
+                    field.set(obj, beanFactory.get(field.getType()));
+                }
+            }
         }
     }
 

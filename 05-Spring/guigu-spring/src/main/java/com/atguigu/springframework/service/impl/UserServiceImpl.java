@@ -14,5 +14,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void serviceFunc() {
         System.out.println("serviceFunc......");
+        userDao.daoFunc();
     }
 }
