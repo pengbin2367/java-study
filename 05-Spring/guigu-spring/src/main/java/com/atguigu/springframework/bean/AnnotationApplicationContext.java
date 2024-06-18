@@ -12,7 +12,7 @@ import java.util.Map;
 public class AnnotationApplicationContext implements ApplicationContext {
 
     private final Map<Class, Object> beanFactory = new HashMap<>();
-    private final static String rootPaht = "/home/pengbin/IdeaProjects/java-study/05-Spring/guigu-spring/target/classes/";
+    private final String rootPath = "/home/pengbin/IdeaProjects/java-study/05-Spring/guigu-spring/target/classes/";
 
     public AnnotationApplicationContext(String basePackage) {
         String path = basePackage.replaceAll("\\.", "/");
@@ -37,7 +37,7 @@ public class AnnotationApplicationContext implements ApplicationContext {
                 if (f.getPath().contains("test-classes")) continue ;
                 if (f.isDirectory()) loadBean(f);
                 else {
-                    String pathWithClass = f.getAbsolutePath().substring(rootPaht.length());
+                    String pathWithClass = f.getAbsolutePath().substring(rootPath.length());
                     if (pathWithClass.contains(".class")) {
                         String fullName = pathWithClass.replaceAll("/", ".").replace(".class", "");
                         Class<?> aClass = Class.forName(fullName);
