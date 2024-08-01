@@ -1,0 +1,14 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual # 把消息确认模式改为手动确认
+        prefetch: 1 # 设置每次最多从消息队列服务器取回多少消息
+logging:
+  level:
+    com.atqingke.rabbitmq.consumer.listener.MyMessageListener: info
