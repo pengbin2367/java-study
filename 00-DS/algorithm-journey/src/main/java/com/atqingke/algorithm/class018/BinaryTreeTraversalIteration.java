@@ -68,9 +68,9 @@ public class BinaryTreeTraversalIteration {
             stack.push(root);
             while (!stack.isEmpty()) {
                 TreeNode cur = stack.peek();
-                if (cur.left != null && cur.left != root.left && cur.right != root.right) {
+                    if (cur.left != null && cur.left != root && cur.right != root) {
                     stack.push(cur.left);
-                } else if (cur.right != null && cur.right != root.right) {
+                } else if (cur.right != null && cur.right != root) {
                     stack.push(cur.right);
                 } else {
                     System.out.println(cur.val + " ");
